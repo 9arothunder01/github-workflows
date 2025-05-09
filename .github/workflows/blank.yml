@@ -21,7 +21,6 @@ jobs:
         run: |
           npm install
           npm run test
-
       - name: 🔐 Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -43,11 +42,9 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
           -H "Content-Type: application/json" \
           --data @.github/scripts/cloudflare_dns.json
-
       - name: 🧼 SSL Renewal Check
         run: |
           bash .github/scripts/ssl_check.sh
-
       - name: 🔔 Notify Slack
         if: always()
         uses: rtCamp/action-slack-notify@v2
@@ -61,5 +58,3 @@ jobs:
         run: |
           echo "Rolling back..."
           firebase hosting:rollback --project $FIREBASE_PROJECT
-      
-
